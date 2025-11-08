@@ -3,67 +3,52 @@ package geometrical_shapes;
 import java.awt.Color;
 
 public class Circle implements Drawable {
-    public double r;
-    public Point center;
+    Point center;
+    int radius;
+    Color color;
 
-    public Circle(Point center, double r) {
-        this.r = r;
+    public Circle(Point center, int radius) {
         this.center = center;
+        this.radius = radius;
+        this.color = this.getColor();
     }
 
-public static Circle random(int width, int height) {
-    
-    int margin = 10; 
-    
-    int minCenterX = margin;
-    int maxCenterX = width - margin;
-    int minCenterY = margin;
-    int maxCenterY = height - margin;
-
-    int pointX = (int)(Math.random() * (maxCenterX - minCenterX) + minCenterX);
-    int pointY = (int)(Math.random() * (maxCenterY - minCenterY) + minCenterY);
-    
-    int maxRadiusLeft = pointX - margin;
-    int maxRadiusRight = (width - margin) - pointX;
-    int maxRadiusTop = pointY - margin;
-    int maxRadiusBottom = (height - margin) - pointY;
-    
-    int maxPossibleRadius = Math.min(
-        Math.min(maxRadiusLeft, maxRadiusRight),
-        Math.min(maxRadiusTop, maxRadiusBottom)
-    );
-    
-    int minRadius = 10;
-    if (maxPossibleRadius < minRadius) {
-        maxPossibleRadius = minRadius;
-    }
-    
-    float radius = (float)(Math.random() * (maxPossibleRadius - minRadius) + minRadius);
-    
-    Point center = new Point(pointX, pointY);
-    return new Circle(center, radius);
-}
-
-    public double getR() {
-        return this.r;
+    public static Circle random(int width, int height) {
+        Point center = Point.random(width, height);
+        int radius = (int) Math.round(Math.random() * ((width > height ? width : height) / 2 ));
+        return new Circle(center, radius);
     }
 
-    public Point getCenter() {
-        return this.center;
-    }
-
+    // Bresenham algorithm
     public void draw(Displayable displayable) {
-        double c = 2.0 * Math.PI * this.r ;
-        double inc = 360.0 / c;
-        double i = 0.0;
-        Color color = this.getColor();
-        while (i <= 360.0) {
-            double angle = Math.toRadians(i);
-            int x = (int)(Math.round(this.center.getX()+ this.r * Math.cos(angle))); 
-            int y = (int)(Math.round(this.center.getY()+ this.r * Math.sin(angle))); 
+        int d = 3 - (2 * this.radius);
+        int x = 0;
+        int y = this.radius;
 
-            displayable.display(x, y, color);
-            i += inc;
+        this.setPoints(x, y, displayable);
+
+        while (x <= y) {
+            if (d < 0) {
+                d = d + (4 * x) + 6;
+            } else {
+                d = d + 4 * (x - y) + 10;
+                y--;
+            }
+
+            x++;
+            this.setPoints(x, y, displayable);
         }
+    }
+
+    private void setPoints(int x, int y, Displayable displayable) {
+        int xc = this.center.getX(), yc = this.center.getY();
+        displayable.display(xc + x, yc + y, this.color);
+        displayable.display(xc - x, yc + y, this.color);
+        displayable.display(xc + x, yc - y, this.color);
+        displayable.display(xc - x, yc - y, this.color);
+        displayable.display(xc + y, yc + x, this.color);
+        displayable.display(xc - y, yc + x, this.color);
+        displayable.display(xc + y, yc - x, this.color);
+        displayable.display(xc - y, yc - x, this.color);
     }
 }
