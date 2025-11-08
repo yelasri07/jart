@@ -1,5 +1,7 @@
 package geometricalShapes;
 
+import java.awt.Color;
+
 public class Line implements Drawable {
     Point p1, p2;
 
@@ -21,8 +23,10 @@ public class Line implements Drawable {
         float x = this.p1.getX();
         float y = this.p1.getY();
 
+        Color color = this.getColor();
+
         for (int i = 0; i < steps; i++) {
-            displayable.display(Math.round(x), Math.round(y), this.getColor());
+            displayable.display(Math.round(x), Math.round(y), color);
             x += Xinc;
             y += Yinc;
         }
