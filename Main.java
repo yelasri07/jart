@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Image image = new Image(1000, 1000);
 
-        Line line = new Line(new Point(100, 600), new Point(300, 200));
+        Line line = Line.random(image.getWidth(), image.getHeight());
         line.draw(image);
 
         // Rectangle rectangle = new Rectangle(new Point(50, 50), new Point(300, 200));
