@@ -11,13 +11,38 @@ public class Circle implements Drawable {
         this.center = center;
     }
 
-    public static Circle random(int width, int height) {
-        // int pointX = (int)(Math.random() * (width - 50) + 20);
-        // int pointY = (int)(Math.random() * (height - 50) + 20);
-        // float radius = (float)(Math.random() * (Math.min(pointX, pointY) - 50) + 20);
-        Point center = new Point(300, 300);
-        return new Circle(center, 60);
+public static Circle random(int width, int height) {
+    
+    int margin = 10; 
+    
+    int minCenterX = margin;
+    int maxCenterX = width - margin;
+    int minCenterY = margin;
+    int maxCenterY = height - margin;
+
+    int pointX = (int)(Math.random() * (maxCenterX - minCenterX) + minCenterX);
+    int pointY = (int)(Math.random() * (maxCenterY - minCenterY) + minCenterY);
+    
+    int maxRadiusLeft = pointX - margin;
+    int maxRadiusRight = (width - margin) - pointX;
+    int maxRadiusTop = pointY - margin;
+    int maxRadiusBottom = (height - margin) - pointY;
+    
+    int maxPossibleRadius = Math.min(
+        Math.min(maxRadiusLeft, maxRadiusRight),
+        Math.min(maxRadiusTop, maxRadiusBottom)
+    );
+    
+    int minRadius = 10;
+    if (maxPossibleRadius < minRadius) {
+        maxPossibleRadius = minRadius;
     }
+    
+    float radius = (float)(Math.random() * (maxPossibleRadius - minRadius) + minRadius);
+    
+    Point center = new Point(pointX, pointY);
+    return new Circle(center, radius);
+}
 
     public double getR() {
         return this.r;
