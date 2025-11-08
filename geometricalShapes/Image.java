@@ -24,6 +24,13 @@ public class Image implements Displayable {
             System.err.println(e);
         }
     }
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
 
     public void display(int x, int y, Color color) {
         this.img.setRGB(x, y, color.getRGB());
