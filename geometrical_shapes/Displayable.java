@@ -1,4 +1,4 @@
-package geometricalShapes;
+package geometrical_shapes;
 
 import java.awt.Color;
 

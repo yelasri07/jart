@@ -1,4 +1,4 @@
-package geometricalShapes;
+package geometrical_shapes;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -23,6 +23,13 @@ public class Image implements Displayable {
         } catch (IOException e) {
             System.err.println(e);
         }
+    }
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 
     public void display(int x, int y, Color color) {
