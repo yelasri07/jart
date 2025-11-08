@@ -4,8 +4,8 @@ public class Main {
     public static void main(String[] args) {
         Image image = new Image(1000, 1000);
 
-        Point p1 = new Point(20, 20);
-        p1.draw(image);
+        Line line = new Line(new Point(100, 600), new Point(300, 200));
+        line.draw(image);
 
         // Rectangle rectangle = new Rectangle(new Point(50, 50), new Point(300, 200));
         // rectangle.draw(image);
