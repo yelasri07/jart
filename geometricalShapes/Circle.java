@@ -1,4 +1,7 @@
 package geometricalShapes;
+
+import java.awt.Color;
+
 public class Circle implements Drawable {
     public double r;
     public Point center;
@@ -28,12 +31,13 @@ public class Circle implements Drawable {
         double c = 2.0 * Math.PI * this.r ;
         double inc = 360.0 / c;
         double i = 0.0;
+        Color color = this.getColor();
         while (i <= 360.0) {
             double angle = Math.toRadians(i);
             int x = (int)(Math.round(this.center.getX()+ this.r * Math.cos(angle))); 
             int y = (int)(Math.round(this.center.getY()+ this.r * Math.sin(angle))); 
 
-            displayable.display(x, y, this.getColor());
+            displayable.display(x, y, color);
             i += inc;
         }
     }
