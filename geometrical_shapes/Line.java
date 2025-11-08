@@ -17,6 +17,8 @@ public class Line implements Drawable {
         return new Line(point1, point2);
     }
 
+
+
     // DDA (Digital Differential Analyzer) algorithm
     public void draw(Displayable displayable) {
         float dx = this.p2.getX() - this.p1.getX();
