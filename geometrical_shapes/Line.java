@@ -10,6 +10,13 @@ public class Line implements Drawable {
         this.p2 = p2;
     }
 
+
+     public static Line random(int width, int height) {
+        Point point1 = Point.random(width, height);
+        Point point2 = Point.random(width, height);
+        return new Line(point1, point2);
+    }
+
     // DDA (Digital Differential Analyzer) algorithm
     public void draw(Displayable displayable) {
         float dx = this.p2.getX() - this.p1.getX();
