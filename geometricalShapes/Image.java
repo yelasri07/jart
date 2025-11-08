@@ -24,6 +24,7 @@ public class Image implements Displayable {
             System.err.println(e);
         }
     }
+
     public int getWidth() {
         return this.width;
     }
