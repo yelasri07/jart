@@ -22,6 +22,10 @@ public class Main {
         Pentagon p = new Pentagon(new Point(500, 300), 120);
         p.draw(image);
         ////
+        Cube c1 = new Cube(new Point(600, 150), 180);
+        c1.draw(image);
+        ///
+
         image.save("image.png");
     }
 }
