@@ -16,7 +16,12 @@ public class Main {
             Circle circle = Circle.random(image.getWidth(), image.getHeight());
             circle.draw(image);
         }
-        
+        //***---------------***//
+        //        Bonus        //
+        //***---------------***//
+        Pentagon p = new Pentagon(new Point(500, 300), 120);
+        p.draw(image);
+        ////
         image.save("image.png");
     }
 }
