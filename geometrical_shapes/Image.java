@@ -33,6 +33,8 @@ public class Image implements Displayable {
     }
 
     public void display(int x, int y, Color color) {
-        this.img.setRGB(x, y, color.getRGB());
+        if (x > 0 && x < this.width && y > 0 && y < this.height) {
+            this.img.setRGB(x, y, color.getRGB());
+        }
     }
 }
