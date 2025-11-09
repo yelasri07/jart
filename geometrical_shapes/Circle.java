@@ -11,11 +11,11 @@ public class Circle implements Drawable {
         this.center = center;
     }
 
-public static Circle random(int width, int height) {
-    Point center = Point.random(width, height);
-    int radius = (int) Math.round(Math.random() * ((width > height ? width : height) / 2 ));
-    return new Circle(center, radius);
-}
+    public static Circle random(int width, int height) {
+        Point center = Point.random(width, height);
+        int radius = (int) Math.round(Math.random() * ((width > height ? width : height) / 2 ));
+        return new Circle(center, radius);
+    }
 
     public double getR() {
         return this.r;
