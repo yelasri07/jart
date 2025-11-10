@@ -1,10 +1,11 @@
 package geometrical_shapes;
 
+import java.awt.Color;
+
 /**
  * Represents a simple wireframe cube drawn in 2D projection.
  * The cube is composed of two offset squares connected by lines.
- * The color is obtained from Drawable.getColor(), which may change each time
- * draw() is called.
+ * The color is obtained from Drawable.getColor(), which may change each time draw() is called.
  */
 public class Cube implements Drawable {
     private final Point origin;
@@ -46,61 +47,44 @@ public class Cube implements Drawable {
      *
      * @param d The Displayable surface on which the cube is drawn.
      */
+    @Override
     public void draw(Displayable d) {
-        var color = getColor();
+        Color color = getColor();
 
         int x = origin.getX(), y = origin.getY();
         int s = size, o = offset;
 
-        // Front face (square ABCD)
-        int Ax = x, Ay = y;
-        int Bx = x + s, By = y;
-        int Cx = x + s, Cy = y + s;
-        int Dx = x, Dy = y + s;
+        // Front face vertices (A, B, C, D)
+        Point A = new Point(x, y);
+        Point B = new Point(x + s, y);
+        Point C = new Point(x + s, y + s);
+        Point D = new Point(x, y + s);
 
-        // Back face (square A'B'C'D'), offset diagonally
-        int A2x = Ax + o, A2y = Ay + o;
-        int B2x = Bx + o, B2y = By + o;
-        int C2x = Cx + o, C2y = Cy + o;
-        int D2x = Dx + o, D2y = Dy + o;
+        // Back face vertices (A', B', C', D')
+        Point A2 = new Point(A.getX() + o, A.getY() + o);
+        Point B2 = new Point(B.getX() + o, B.getY() + o);
+        Point C2 = new Point(C.getX() + o, C.getY() + o);
+        Point D2 = new Point(D.getX() + o, D.getY() + o);
 
-        // Draw front square
-        line(d, Ax, Ay, Bx, By, color);
-        line(d, Bx, By, Cx, Cy, color);
-        line(d, Cx, Cy, Dx, Dy, color);
-        line(d, Dx, Dy, Ax, Ay, color);
+        // Helper lambda to draw a colored edge between two points
+        java.util.function.BiConsumer<Point, Point> edge = (p, q) -> new Line(p, q, color).draw(d);
 
-        // Draw back square
-        line(d, A2x, A2y, B2x, B2y, color);
-        line(d, B2x, B2y, C2x, C2y, color);
-        line(d, C2x, C2y, D2x, D2y, color);
-        line(d, D2x, D2y, A2x, A2y, color);
-        
-        // Connect corresponding vertices between front and back
-        line(d, Ax, Ay, A2x, A2y, color);
-        line(d, Bx, By, B2x, B2y, color);
-        line(d, Cx, Cy, C2x, C2y, color);
-        line(d, Dx, Dy, D2x, D2y, color);
-    }
+        // Front square
+        edge.accept(A, B);
+        edge.accept(B, C);
+        edge.accept(C, D);
+        edge.accept(D, A);
 
-    private static void line(Displayable d, int x0, int y0, int x1, int y1, java.awt.Color c) {
-        int dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
-        int sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
-        int err = dx - dy;
-        int x = x0, y = y0;
-        while (true) {
-            d.display(x, y, c);
-            if (x == x1 && y == y1)
-                break;
-            int e2 = 2 * err;
-            if (e2 > -dy) {
-                err -= dy;
-                x += sx;
-            }
-            if (e2 < dx) {
-                err += dx;
-                y += sy;
-            }
-        }
+        // Back square
+        edge.accept(A2, B2);
+        edge.accept(B2, C2);
+        edge.accept(C2, D2);
+        edge.accept(D2, A2);
+
+        // Connect front and back faces
+        edge.accept(A, A2);
+        edge.accept(B, B2);
+        edge.accept(C, C2);
+        edge.accept(D, D2);
     }
 }
